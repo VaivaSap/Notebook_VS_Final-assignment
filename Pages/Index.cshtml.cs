@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Notebook_VS_Final_assignment.Model;
 
 namespace Notebook_VS_Final_assignment.Pages
 {
@@ -14,9 +15,6 @@ namespace Notebook_VS_Final_assignment.Pages
             _logger = logger;
         }
 
-        public void OnGet()
-        {
-
-        }
     }
 }
+

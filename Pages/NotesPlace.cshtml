@@ -1,0 +1,80 @@
+﻿@page
+@model NotesPlace
+@{
+    ViewData["Title"] = "Place for Your Thoughts";
+}
+
+<div class="text-center">
+    <h1 class="display-4">"Place for Your Thoughts"</h1>
+    </div>
+
+
+    
+<div>
+<form> 
+   Find by its Title <input type="text" asp-for="SearchInputTitle" />
+   <input type="submit" value="Search" />
+</form>
+</div>
+
+
+<div class="notes">
+@foreach(var note in Model.ListOfNotes)
+{
+    <div class="note">
+    
+    <div class="note-body">
+   <h5 class="note-title">@note.Title</h5> 
+   <h6 class="note-text">@note.Text</h6>
+ </div>
+
+   <form method="post">
+       <button asp-page-handler="Delete" asp-route-id="@note.Id" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</button> 
+   </form>
+    </div>
+}
+</div>
+
+<div class="categories">
+@foreach(var category in Model.CategoriesForNotes)
+{
+    <div class="category">
+    </div>
+    <div class="note-body">
+   <h5 class="note-title">@category.TitleOfCategory</h5> 
+   
+   <form method="post">
+       <button asp-page-handler="EditCategory" asp-route-id="@category.Id" class="btn btn-danger btn-sm">Edit</button> 
+       <button asp-page-handler="DeleteCategory" asp-route-id="@category.Id" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</button> 
+   </form>
+    </div>
+}
+</div>
+
+  <form id="note" method="post">
+                <hr />
+                
+                <div class="title">
+                                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="input-title" aria-required="true" />
+
+                </div>
+
+                  <div class="text">
+                                    <label asp-for="Text"></label>
+
+                    <input asp-for="Text" class="input-content" aria-required="true" />
+                </div>
+                <div>
+                    <button id="input-text" type="submit" class="w-100 btn btn-lg btn-primary">Record it</button>
+                </div>
+                         
+            
+            
+            </form>
+
+
+          @*    @foreach(var note in Model.ListOfNotes)
+                    {
+        
+                    }*@

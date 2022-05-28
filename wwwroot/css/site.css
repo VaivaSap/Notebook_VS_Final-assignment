@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.note {
+    box-sizing: border-box;
+    background-color: #F4BFBF;
+    color: #8CC0DE;
+    border: solid 1px #112B3C;
+    font-family: cursive;
+}

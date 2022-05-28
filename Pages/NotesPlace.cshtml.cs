@@ -1,0 +1,79 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Notebook_VS_Final_assignment.Model;
+using Notebook_VS_Final_assignment.Model.Repositories;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
+
+namespace Notebook_VS_Final_assignment.Pages
+{
+    [Authorize]
+    public class NotesPlace : PageModel
+    {
+        private readonly ILogger<NotesPlace> _logger;
+        
+        [BindProperty]
+        public string Title { get; set; }
+        [BindProperty]
+        public string Text { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchInputTitle { get; set; }
+
+        public List<ThoughtSnippets> ListOfNotes { get; set; } = new List<ThoughtSnippets>();
+        public List<CategoriesForNotes> CategoriesForNotes { get; set; } = new List<CategoriesForNotes>();
+
+        private readonly NotesRepository _notesRepository;
+        private readonly CategoriesRepository _categoriesRepository;
+        public NotesPlace(ILogger<NotesPlace> logger, NotesRepository notesRepository, CategoriesRepository categoriesRepository)
+        {
+            _notesRepository = notesRepository;
+            _logger = logger;
+            _categoriesRepository = categoriesRepository;
+
+        }
+
+        
+
+        public void OnGet()
+        {
+            Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out Guid userId);
+
+            ListOfNotes = _notesRepository.GetNotesOfUser(userId);
+            CategoriesForNotes = _categoriesRepository.GetCategoriesOfUser(userId);
+            if (!string.IsNullOrEmpty(SearchInputTitle))
+            {
+                
+                ListOfNotes = _notesRepository.GetByTitle(SearchInputTitle, userId);
+
+
+            }
+
+        }
+
+        public RedirectToPageResult OnPost()
+        {
+            Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out Guid userId);
+            _notesRepository.Create(Title, Text, userId);
+            return RedirectToPage("/NotesPlace");
+        }
+
+        public RedirectToPageResult OnPostDelete(Guid id)
+        {
+           
+            _notesRepository.RemoveNote(id);
+         
+           return RedirectToPage("/NotesPlace");
+        }
+
+        public RedirectToPageResult OnPostEdit(Guid id, string title, string text)
+        {
+            _notesRepository.EditNote(id, title, text);
+
+           return RedirectToPage("/NotesPlace");
+        }
+    }
+}
+
+

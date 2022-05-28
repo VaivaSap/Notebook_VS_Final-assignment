@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Notebook_VS_Final_assignment.Areas.Identity.Data;
+using Notebook_VS_Final_assignment.Model.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ContextNotebookConnection") ?? throw new InvalidOperationException("Connection string 'ContextNotebookConnection' not found.");
 
@@ -12,6 +14,11 @@ builder.Services.AddDefaultIdentity<Notebook_User>(options => options.SignIn.Req
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddTransient<NotesRepository>();
+builder.Services.AddTransient<CategoriesRepository>();
+
+
 
 var app = builder.Build();
 
