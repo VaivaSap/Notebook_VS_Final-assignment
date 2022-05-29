@@ -48,19 +48,15 @@ namespace Notebook_VS_Final_assignment.Model.Repositories
         }
 
 
-        public void EditCategory(Guid Id) 
-        {
+        public void EditCategory(Guid Id, string title)
+        { 
             var category = _context.Categories.FirstOrDefault(n => n.Id == Id);
-            var existingCategory = GetCategory(category.Id);
-
-            if (existingCategory != null)
-            {
-                _context.Categories.Update(category);
-                _context.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            category.TitleOfCategory = title;
                 _context.SaveChanges();
             }
 
-        }
+        
+
 
         public void RemoveCategory(Guid Id)
         {

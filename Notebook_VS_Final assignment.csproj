@@ -24,4 +24,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\assets\happy.jpg" />
+  </ItemGroup>
+
 </Project>

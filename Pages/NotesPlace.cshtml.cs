@@ -18,8 +18,12 @@ namespace Notebook_VS_Final_assignment.Pages
         public string Title { get; set; }
         [BindProperty]
         public string Text { get; set; }
+        [BindProperty]
+        public Guid CategoryId { get; set; }
         [BindProperty(SupportsGet = true)]
         public string SearchInputTitle { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchCategoryTitle { get; set; }
 
         public List<ThoughtSnippets> ListOfNotes { get; set; } = new List<ThoughtSnippets>();
         public List<CategoriesForNotes> CategoriesForNotes { get; set; } = new List<CategoriesForNotes>();
@@ -50,12 +54,22 @@ namespace Notebook_VS_Final_assignment.Pages
 
             }
 
+            if (!string.IsNullOrEmpty(SearchCategoryTitle))
+            {
+
+                ListOfNotes = _notesRepository.GetByCategory(SearchCategoryTitle, userId);
+
+
+            }
+
+
+
+
         }
 
         public RedirectToPageResult OnPost()
-        {
-            Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out Guid userId);
-            _notesRepository.Create(Title, Text, userId);
+        { 
+            _notesRepository.Create(Title, Text, CategoryId);
             return RedirectToPage("/NotesPlace");
         }
 
@@ -73,6 +87,8 @@ namespace Notebook_VS_Final_assignment.Pages
 
            return RedirectToPage("/NotesPlace");
         }
+
+
     }
 }
 

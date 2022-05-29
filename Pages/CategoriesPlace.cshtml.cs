@@ -45,6 +45,21 @@ namespace Notebook_VS_Final_assignment.Pages
             }
 
         }
+
+        public RedirectToPageResult OnPost()
+        {
+            Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out Guid userId);
+            _categoriesRepository.Create(Title, userId);
+            return RedirectToPage("/CategoriesPlace");
+        }
+
+        public RedirectToPageResult OnPostDeleteCategory(Guid id)
+        {
+
+            _categoriesRepository.RemoveCategory(id);
+
+            return RedirectToPage("/CategoriesPlace");
+        }
     }
 
 }

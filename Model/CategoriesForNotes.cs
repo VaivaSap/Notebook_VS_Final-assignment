@@ -4,6 +4,8 @@ namespace Notebook_VS_Final_assignment.Model
 {
     public class CategoriesForNotes
     {
+       
+
         public Guid Id { get; set; }
         public string TitleOfCategory { get; set; }
 

@@ -10,8 +10,7 @@ namespace Notebook_VS_Final_assignment.Model.Repositories
     {
 
         private readonly ContextNotebook _context;
-        private readonly object _notesRepository;
-       // public List<ThoughtSnippets> Notes { get; set; }
+       
 
 
         public NotesRepository(ContextNotebook context)
@@ -32,25 +31,12 @@ namespace Notebook_VS_Final_assignment.Model.Repositories
 
 
 
-            public void UpdateNote(Guid Id) // Changing a content of an already existing note
-            {
-                var note = _context.Notes.FirstOrDefault(n => n.Id == Id);
-                var existingNote = GetNote(note.Id);
-
-                if (existingNote != null)
-                {
-                    _context.Notes.Update(note);
-                    _context.Entry(note).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                    _context.SaveChanges();
-                }
-
-
-            }
+            
 
             public void Create(string title, string text, Guid categoryId) // Creating a new note 
             {
                 
-                var category = _context.Categories.Find(Guid.Parse("feaea579-ddaa-4d1d-b3df-afc83b635df7"));
+                var category = _context.Categories.Find(categoryId);
                 var note = new ThoughtSnippets
 
 
@@ -81,13 +67,25 @@ namespace Notebook_VS_Final_assignment.Model.Repositories
 
             public void EditNote(Guid id, string title, string text)
             {
-               // note.Title = title;
-                _context.SaveChanges();
+            var note = _context.Notes.FirstOrDefault(n => n.Id == id);
+            note.Title = title;
+            note.Text = text;
+            _context.SaveChanges();
             }
+
+        
 
         public List<ThoughtSnippets> GetByTitle(string title, Guid userId) // To find a note by its title
         {
             return _context.Notes.Where(n => n.Title.Contains(title)&& n.Category.Notebook_User.Id == userId).ToList();
+
+        }
+
+
+        public List<ThoughtSnippets> GetByCategory(string category, Guid userId) 
+        {
+            return _context.Notes.Where(n => n.Category.TitleOfCategory.Contains(category) && (n.Category.Notebook_User.Id == userId)).ToList();
+
 
         }
 
