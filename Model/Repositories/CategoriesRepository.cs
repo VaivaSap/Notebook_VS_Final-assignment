@@ -10,7 +10,7 @@ namespace Notebook_VS_Final_assignment.Model.Repositories
         public CategoriesRepository(ContextNotebook context)
         {
             _context = context;
-           
+
         }
 
         public List<CategoriesForNotes> GetCategoriesOfUser(Guid userId)
@@ -33,7 +33,7 @@ namespace Notebook_VS_Final_assignment.Model.Repositories
         }
 
 
-        public void Create(string title,  Guid userId) 
+        public void Create(string title, Guid userId)
         {
             var user = _context.Users.FirstOrDefault(x => x.Id == userId);
             var category = new CategoriesForNotes
@@ -43,19 +43,19 @@ namespace Notebook_VS_Final_assignment.Model.Repositories
                 Notebook_User = user
             };
 
-            _context.Categories.Add(category); 
+            _context.Categories.Add(category);
             _context.SaveChanges();
         }
 
 
         public void EditCategory(Guid Id, string title)
-        { 
+        {
             var category = _context.Categories.FirstOrDefault(n => n.Id == Id);
             category.TitleOfCategory = title;
-                _context.SaveChanges();
-            }
+            _context.SaveChanges();
+        }
 
-        
+
 
 
         public void RemoveCategory(Guid Id)
@@ -68,9 +68,9 @@ namespace Notebook_VS_Final_assignment.Model.Repositories
             }
         }
 
-     
+
     }
 
 
-    
+
 }

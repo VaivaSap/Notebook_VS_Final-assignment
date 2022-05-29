@@ -33,8 +33,8 @@ namespace Notebook_VS_Final_assignment.Pages
 
         public RedirectToPageResult OnPost()
         {
-           _notesRepository.EditNote(Id, Title, Text);
-            
+            _notesRepository.EditNote(Id, Title, Text);
+
             return RedirectToPage("/NotesPlace");
         }
 

@@ -10,7 +10,7 @@ namespace Notebook_VS_Final_assignment.Model
 {
     public class ThoughtSnippets
     {
-     
+
         public Guid Id { get; set; }
         public string Title { get; set; }
 

@@ -7,10 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ContextNotebookConnection") ?? throw new InvalidOperationException("Connection string 'ContextNotebookConnection' not found.");
 
 builder.Services.AddDbContext<ContextNotebook>(options =>
-    options.UseSqlServer(connectionString));;
+    options.UseSqlServer(connectionString)); ;
 
 builder.Services.AddDefaultIdentity<Notebook_User>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ContextNotebook>();;
+    .AddEntityFrameworkStores<ContextNotebook>(); ;
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -34,7 +34,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 

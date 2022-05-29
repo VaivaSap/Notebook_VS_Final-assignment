@@ -13,7 +13,7 @@ namespace Notebook_VS_Final_assignment.Pages
     public class NotesPlace : PageModel
     {
         private readonly ILogger<NotesPlace> _logger;
-        
+
         [BindProperty]
         public string Title { get; set; }
         [BindProperty]
@@ -38,7 +38,7 @@ namespace Notebook_VS_Final_assignment.Pages
 
         }
 
-        
+
 
         public void OnGet()
         {
@@ -48,7 +48,7 @@ namespace Notebook_VS_Final_assignment.Pages
             CategoriesForNotes = _categoriesRepository.GetCategoriesOfUser(userId);
             if (!string.IsNullOrEmpty(SearchInputTitle))
             {
-                
+
                 ListOfNotes = _notesRepository.GetByTitle(SearchInputTitle, userId);
 
 
@@ -68,24 +68,24 @@ namespace Notebook_VS_Final_assignment.Pages
         }
 
         public RedirectToPageResult OnPost()
-        { 
+        {
             _notesRepository.Create(Title, Text, CategoryId);
             return RedirectToPage("/NotesPlace");
         }
 
         public RedirectToPageResult OnPostDelete(Guid id)
         {
-           
+
             _notesRepository.RemoveNote(id);
-         
-           return RedirectToPage("/NotesPlace");
+
+            return RedirectToPage("/NotesPlace");
         }
 
         public RedirectToPageResult OnPostEdit(Guid id, string title, string text)
         {
             _notesRepository.EditNote(id, title, text);
 
-           return RedirectToPage("/NotesPlace");
+            return RedirectToPage("/NotesPlace");
         }
 
 
